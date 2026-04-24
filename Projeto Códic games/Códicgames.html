@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Códic Games | Informação que vira conquista</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+<header class="fade-in">
+    <div class="header-container">
+        <div class="logo-wrapper">
+            <img src="Logo Códicgames.jpeg" alt="Logo Códic Games" class="header-logo">
+        </div>
+        <div class="header-titles">
+            <h1 class="glitch-text">Códic Games</h1>
+            <div class="slogan-container">
+                <p class="slogan">INFORMAÇÃO QUE VIRA <span class="highlight">CONQUISTA</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MENU ADICIONADO -->
+    <nav class="menu">
+        <a href="#sobre">Sobre</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#tabela">Tabela</a>
+        <a href="#contato">Contato</a>
+    </nav>
+</header>
+
+<main>
+
+<!-- APRESENTAÇÃO -->
+<section id="sobre" class="section-card fade-in">
+    <h3>🎮 Sobre o Projeto</h3>
+    <p>
+        O Códic Games é um site desenvolvido para jogadores organizarem seus rankings,
+        compartilharem opiniões e descobrirem novos jogos. Aqui a informação vira conquista!
+    </p>
+</section>
+
+<!-- LISTA -->
+<section class="section-card fade-in">
+    <h3>📌 Jogos Populares</h3>
+    <ul>
+        <li>God of War</li>
+        <li>GTA V</li>
+        <li>Fortnite</li>
+        <li>Call of Duty</li>
+        <li>Minecraft</li>
+    </ul>
+</section>
+
+<!-- GALERIA -->
+<section id="galeria" class="section-card fade-in">
+    <h3>🖼️ Galeria de Jogos</h3>
+    <div class="galeria">
+        <img src="RE4.jpg" alt="Jogo 1">
+        <img src="RED2.jpg" alt="Jogo 2">
+        <img src="UNC4.jpg" alt="Jogo 3">
+    </div>
+</section>
+
+        <!-- SEU PERFIL ORIGINAL -->
+        <section class="section-card fade-in">
+            <h3><span class="icon">👤</span> Perfil do Conquistador</h3>
+            <div class="profile-layout">
+                <div class="avatar-side">
+                    <div class="avatar-frame" id="avatarPreview">
+                        <i class="fa-solid fa-user-astronaut"></i>
+                    </div>
+                    <input type="file" id="imageInput" accept="image/*" hidden>
+                    <button onclick="document.getElementById('imageInput').click()" class="btn-action mini">Mudar imagem de avatar</button>
+                </div>
+                <div class="info-side">
+                    <input type="text" id="userName" placeholder="Seu Nick..." class="input-glow">
+                    <div class="stats-summary">
+                        <p><i class="fa-solid fa-star" style="color: #ffcc00;"></i> Jogo Favorito: <span id="top1-fav">---</span></p>
+                        <p><i class="fa-solid fa-gem" style="color: #00d4ff;"></i> Joia Rara: <span id="top1-sub">---</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+       <!-- RANKINGS -->
+<section class="section-card fade-in">
+    <h3><span class="icon">🏆</span> Meus Rankings Top 10</h3>
+
+    <div class="ranking-grid">
+
+        <!-- FAVORITOS -->
+        <div class="ranking-box fav-border">
+            <h4 class="title-fav">⭐ Favoritos</h4>
+
+            <div class="search-box">
+                <input type="text" id="inputFav" placeholder="Digite o nome do jogo...">
+                <div class="suggestions" id="suggestionsFav"></div>
+            </div>
+
+            <button onclick="addToList('inputFav', 'listaFav', 'top1-fav')">Adicionar</button>
+
+            <ul id="listaFav"></ul>
+        </div>
+
+        <!-- SUBESTIMADOS -->
+        <div class="ranking-box sub-border">
+            <h4 class="title-sub">💎 Subestimados</h4>
+
+            <div class="search-box">
+                <input type="text" id="inputSub" placeholder="Digite o nome do jogo...">
+                <div class="suggestions" id="suggestionsSub"></div>
+            </div>
+
+            <button onclick="addToList('inputSub', 'listaSub', 'top1-sub')">Adicionar</button>
+
+            <ul id="listaSub"></ul>
+        </div>
+
+        <!-- SUPERESTIMADOS -->
+        <div class="ranking-box super-border">
+            <h4 class="title-super">🔥 Superestimados</h4>
+
+            <div class="search-box">
+                <input type="text" id="inputSuper" placeholder="Digite o nome do jogo...">
+                <div class="suggestions" id="suggestionsSuper"></div>
+            </div>
+
+            <button onclick="addToList('inputSuper', 'listaSuper', 'top1-super')">Adicionar</button>
+
+            <ul id="listaSuper"></ul>
+        </div>
+
+    </div>
+</section>
+
+<!-- TABELA -->
+<section id="tabela" class="section-card fade-in">
+    <h3>📊 Ranking de Jogos</h3>
+    <table>
+        <tr>
+            <th>Jogo</th>
+            <th>Gênero</th>
+            <th>Nota</th>
+        </tr>
+        <tr>
+            <td>God of War</td>
+            <td>Ação</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td>FIFA</td>
+            <td>Esporte</td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td>Minecraft</td>
+            <td>Aventura</td>
+            <td>9</td>
+        </tr>
+    </table>
+</section>
+
+        <!-- FEEDBACK -->
+        <section class="section-card fade-in">
+            <h3><span class="icon">💬</span> Feedback da Comunidade</h3>
+            <div class="feedback-container">
+                <div id="feedbackBox" class="chat-window">
+                    <div class="feedback-item"><strong>[SISTEMA]</strong> Bem-vindo ao log de feedbacks, jogador.</div>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="feedbackInput" placeholder="Sua mensagem para a Códicgames...">
+                    <button onclick="sendFeedback()" class="btn-action">Enviar feedback</button>
+                </div>
+            </div>
+        </section>
+
+        
+
+    <!-- REDE SOCIAL -->
+<section id="comunidade" class="section-card fade-in">
+    <h3>🌐 Comunidade Códic</h3>
+
+    <!-- Criar Post -->
+    <div class="post-box">
+        <input type="text" id="postText" placeholder="Compartilhe uma dica, opinião ou notícia...">
+        <input type="file" id="postImage" accept="image/*">
+        <button onclick="createPost()" class="btn-action">Postar</button>
+    </div>
+
+    <!-- Feed -->
+    <div id="feed" class="feed-container"></div>
+</section>
+
+<!-- VÍDEO COM LEGENDA -->
+<section class="section-card fade-in" style="text-align: center;">
+    <h6 class="video-title">TUDO SOBRE O SITE</h6>
+    <div class="video-hero">
+        <video controls>
+            <source src="VICódic.mp4" type="video/mp4">
+        </video>
+    </div>
+    <p>Vídeo explicativo sobre o funcionamento do site Códic Games</p>
+</section>
+
+<!-- FORMULÁRIO -->
+<section id="contato" class="section-card fade-in">
+    <h3>📩 Contato</h3>
+    <form>
+        <input type="text" placeholder="Nome" required>
+        <input type="email" placeholder="E-mail" required>
+        <textarea placeholder="Mensagem" required></textarea>
+        <button type="submit">Enviar</button>
+    </form>
+</section>
+
+</main>
+
+<footer>
+    <div class="social-container">
+        <a href="https://www.instagram.com/gustavo_orique" target="_blank" class="insta-link">
+            <i class="fa-brands fa-instagram"></i>
+            <span class="insta-text">Siga a Códicgames</span>
+        </a>
+    </div>
+    <p class="footer-copy">&copy; 2026 Códic Games - Developed by <strong>ORIQUE</strong></p>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
