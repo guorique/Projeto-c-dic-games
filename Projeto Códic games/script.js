@@ -277,3 +277,42 @@ function openImage(src) {
 
     document.body.appendChild(modal);
 }
+// Função para enviar o feedback no chat
+function sendFeedback() {
+    const input = document.getElementById('feedbackInput');
+    const box = document.getElementById('feedbackBox');
+    const message = input.value.trim();
+
+    if (message !== "") {
+        // Cria o elemento da nova mensagem
+        const newFeedback = document.createElement('div');
+        newFeedback.className = 'feedback-item';
+        newFeedback.innerHTML = `<strong>[JOGADOR]</strong> ${message}`;
+        
+        // Adiciona ao box e limpa o input
+        box.appendChild(newFeedback);
+        input.value = "";
+        
+        // Faz o scroll automático para a última mensagem
+        box.scrollTop = box.scrollHeight;
+    }
+}
+
+// Permitir que o usuário envie apertando a tecla "Enter"
+document.getElementById('feedbackInput').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        sendFeedback();
+    }
+});
+
+// Efeito de revelação suave (Scroll Reveal) para as seções
+window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('.fade-in-section');
+    sections.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+        if (sectionTop < window.innerHeight - 50) {
+            section.style.opacity = '1';
+            section.style.transform = 'translateY(0)';
+        }
+    });
+});
