@@ -1,244 +1,1211 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Códic Games | Informação que vira conquista</title>
-    <!-- BOOTSTRAP -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- MEU CSS -->
-    <link rel="stylesheet" href="style.css">
-
-    <!-- FONTES -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
-
-    <!-- ICONES -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Códic Games · Informação que vira conquista</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Syne:wght@400;500;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
 <body>
 
-<header class="fade-in">
-    <div class="header-container">
-        <div class="logo-wrapper">
-            <img src="Logo Códicgames.jpeg" alt="Logo Códic Games" class="header-logo">
-        </div>
-        <div class="header-titles">
-            <h1 class="glitch-text">Códic Games</h1>
-            <div class="slogan-container">
-                <p class="slogan">INFORMAÇÃO QUE VIRA <span class="highlight">CONQUISTA</span></p>
-            </div>
-        </div>
-    </div>
+<!-- ═══════════════════════════════════════
+     TELA DE AUTENTICAÇÃO
+═══════════════════════════════════════ -->
+<div id="authScreen">
+  <div class="auth-grid-bg"></div>
+  <div class="auth-glow"></div>
 
-    <!-- MENU ADICIONADO -->
-    <nav class="menu">
-        <a href="#sobre">Sobre</a>
-        <a href="#galeria">Galeria</a>
-        <a href="#tabela">Tabela</a>
-        <a href="#contato">Contato</a>
+  <div class="auth-left">
+    <div class="auth-brand-wrap">
+      <div class="auth-logo">
+        <div class="auth-logo-icon"><img src="Logo Códicgames.jpeg" alt="Códic Games"/></div>
+        <div class="auth-logo-text">
+          <h1>CÓDIC<span>.GAMES</span></h1>
+          <p>INFORMAÇÃO QUE VIRA CONQUISTA</p>
+        </div>
+      </div>
+      <h2>A rede social da<br/>cultura geek.</h2>
+      <p>Jogos, filmes, séries e comunidade em um só lugar. Compartilhe opiniões, publique notícias e monte seus rankings.</p>
+      <div class="auth-pills">
+        <span class="auth-pill p1">🎮 Jogos</span>
+        <span class="auth-pill p2">🎬 Filmes</span>
+        <span class="auth-pill p3">📺 Séries</span>
+        <span class="auth-pill p4">✨ Geek</span>
+        <span class="auth-pill p5">🏆 Rankings</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-right">
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button class="atab on" id="tabLogin" onclick="switchAuth('login')">Entrar</button>
+        <button class="atab" id="tabReg" onclick="switchAuth('register')">Criar conta</button>
+      </div>
+
+      <div id="fLogin" class="aform">
+        <div class="af">
+          <label>Usuário ou e-mail</label>
+          <input type="text" id="lUser" placeholder="seu_nick ou email@..." autocomplete="username"/>
+        </div>
+        <div class="af">
+          <label>Senha</label>
+          <input type="password" id="lPass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
+        </div>
+        <p class="aerr" id="lErr"></p>
+        <button class="btn-auth" onclick="doLogin()">Entrar</button>
+        <p class="aswitch">Não tem conta? <a onclick="switchAuth('register')">Cadastre-se grátis</a></p>
+      </div>
+
+      <div id="fReg" class="aform" style="display:none">
+        <div class="af">
+          <label>Nick de Jogador</label>
+          <input type="text" id="rNick" placeholder="SeuNick123" autocomplete="username"/>
+        </div>
+        <div class="af">
+          <label>E-mail</label>
+          <input type="email" id="rEmail" placeholder="email@exemplo.com" autocomplete="email"/>
+        </div>
+        <div class="af">
+          <label>Senha</label>
+          <input type="password" id="rPass" placeholder="mínimo 6 caracteres" autocomplete="new-password"/>
+        </div>
+        <div class="af">
+          <label>Confirmar senha</label>
+          <input type="password" id="rConf" placeholder="••••••••" onkeydown="if(event.key==='Enter')doRegister()"/>
+        </div>
+        <p class="aerr" id="rErr"></p>
+        <button class="btn-auth" onclick="doRegister()">Criar conta grátis</button>
+        <p class="aswitch">Já tem conta? <a onclick="switchAuth('login')">Entrar</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     ONBOARDING
+═══════════════════════════════════════ -->
+<div id="onboarding" style="display:none">
+  <div class="ob-bg"></div>
+  <div class="ob-card">
+    <div class="ob-step on" id="ob0">
+      <span class="ob-icon"><img src="Logo Códicgames.jpeg" alt="Códic Games" style="width:96px;height:96px;object-fit:contain"/></span>
+      <h2>Bem-vindo à Códic Games!</h2>
+      <p id="obNickP">Sua conta está pronta. Prepare-se para a melhor comunidade geek do Brasil.</p>
+    </div>
+    <div class="ob-step" id="ob1">
+      <span class="ob-icon">📰</span>
+      <h2>Feed em tempo real</h2>
+      <p>Publique <b>notícias, dicas e opiniões</b> categorizadas. Curta e comente posts da comunidade.</p>
+      <div class="ob-tags">
+        <span class="tag t-jogos">🎮 Jogos</span>
+        <span class="tag t-filmes">🎬 Filmes</span>
+        <span class="tag t-series">📺 Séries</span>
+        <span class="tag t-geek">✨ Geek</span>
+      </div>
+    </div>
+    <div class="ob-step" id="ob2">
+      <span class="ob-icon">🎬</span>
+      <h2>Shorts — estilo TikTok</h2>
+      <p>Assista e poste <b>vídeos curtos</b> de jogos, filmes e séries. Role o feed e curta o que amar!</p>
+    </div>
+    <div class="ob-step" id="ob3">
+      <span class="ob-icon">👥</span>
+      <h2>Siga outros gamers</h2>
+      <p>Pesquise usuários, siga quem curte as mesmas coisas e monte seus rankings pessoais.</p>
+    </div>
+    <div class="ob-progress">
+      <span class="ob-dot on" id="od0"></span>
+      <span class="ob-dot" id="od1"></span>
+      <span class="ob-dot" id="od2"></span>
+      <span class="ob-dot" id="od3"></span>
+    </div>
+    <div class="ob-btns">
+      <button class="ob-skip" onclick="fecharOnboard()">Pular</button>
+      <button class="ob-next" id="btnObNext" onclick="nextOb()">Próximo →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     APP PRINCIPAL
+═══════════════════════════════════════ -->
+<div id="app" style="display:none">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-logo" onclick="goPage('feed',null)">
+      <div class="sb-logo-icon"><img src="Logo Códicgames.jpeg" alt="Códic Games"/></div>
+      <span class="sb-logo-name">CódicGames</span>
+    </div>
+    <nav class="sb-nav">
+      <button class="sb-btn on" data-p="feed" onclick="goPage('feed',this)">
+        <i class="fa-solid fa-house"></i><span>Feed</span>
+      </button>
+      <button class="sb-btn" data-p="explorar" onclick="goPage('explorar',this)">
+        <i class="fa-solid fa-compass"></i><span>Explorar</span>
+      </button>
+      <button class="sb-btn" data-p="rankings" onclick="goPage('rankings',this)">
+        <i class="fa-solid fa-trophy"></i><span>Rankings</span>
+      </button>
+      <button class="sb-btn" data-p="perfil" onclick="goPage('perfil',this)">
+        <i class="fa-solid fa-user"></i><span>Perfil</span>
+      </button>
+      <!-- ★ CONFIGURAÇÕES -->
+      <button class="sb-btn" data-p="config" onclick="goPage('config',this)">
+        <i class="fa-solid fa-gear"></i><span>Configurações</span>
+      </button>
     </nav>
-</header>
-
-<main>
-
-<!-- APRESENTAÇÃO -->
-<section id="sobre" class="section-card fade-in">
-    <h3>🎮 Sobre o Projeto</h3>
-    <p>
-        O Códic Games é um site desenvolvido para jogadores organizarem seus rankings,
-        compartilharem opiniões e descobrirem novos jogos. Aqui a informação vira conquista!
-    </p>
-</section>
-
-<!-- LISTA -->
-<section class="section-card fade-in">
-    <h3>📌 Jogos Populares</h3>
-    <ul>
-        <li>God of War</li>
-        <li>GTA V</li>
-        <li>Fortnite</li>
-        <li>Call of Duty</li>
-        <li>Minecraft</li>
-    </ul>
-</section>
-
-<!-- GALERIA -->
-<section id="galeria" class="section-card fade-in">
-    <h3>🖼️ Galeria de Jogos</h3>
-    <div class="galeria">
-        <img src="RE4.jpg" alt="Jogo 1">
-        <img src="RED2.jpg" alt="Jogo 2">
-        <img src="UNC4.jpg" alt="Jogo 3">
+    <button class="btn-post-novo" onclick="focarCompositor()">
+      <i class="fa-solid fa-feather-pointed"></i><span>Novo Post</span>
+    </button>
+    <div class="sb-perfil" onclick="goPage('perfil',null)">
+      <div class="sb-ava" id="sbAva"></div>
+      <div class="sb-info">
+        <span class="sb-nick" id="sbNick"></span>
+        <span class="sb-handle" id="sbHandle"></span>
+      </div>
+      <button class="btn-sair" onclick="event.stopPropagation();doLogout()" title="Sair">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+      </button>
     </div>
-</section>
+  </aside>
 
-        <!-- SEU PERFIL ORIGINAL -->
-        <section class="section-card fade-in">
-            <h3><span class="icon">👤</span> Perfil do Conquistador</h3>
-            <div class="profile-layout">
-                <div class="avatar-side">
-                    <div class="avatar-frame" id="avatarPreview">
-                        <i class="fa-solid fa-user-astronaut"></i>
+  <!-- COLUNA CENTRAL -->
+  <main class="main-col" id="mainCol">
+
+    <!-- PAGE: FEED -->
+    <div class="pg on" id="pg-feed">
+      <div class="col-hdr">
+        <h2>Feed</h2>
+        <div class="feed-tabs">
+          <button class="ft on" data-f="all"     onclick="doFiltro(this,'all')">Tudo</button>
+          <button class="ft"    data-f="jogos"   onclick="doFiltro(this,'jogos')">🎮 Jogos</button>
+          <button class="ft"    data-f="filmes"  onclick="doFiltro(this,'filmes')">🎬 Filmes</button>
+          <button class="ft"    data-f="series"  onclick="doFiltro(this,'series')">📺 Séries</button>
+          <button class="ft"    data-f="noticia" onclick="doFiltro(this,'noticia')">📰 Notícia</button>
+          <button class="ft"    data-f="dica"    onclick="doFiltro(this,'dica')">💡 Dica</button>
+        </div>
+      </div>
+      <div class="composer">
+        <div class="comp-ava" id="compAva"></div>
+        <div class="comp-body">
+          <textarea id="postTxt" placeholder="O que está acontecendo no mundo geek?" rows="3"></textarea>
+          <div class="comp-divider"></div>
+          <div class="comp-footer">
+            <div class="comp-cats">
+              <button class="cc on" data-c="jogos"   onclick="selCat(this)">🎮 Jogos</button>
+              <button class="cc"    data-c="filmes"  onclick="selCat(this)">🎬 Filmes</button>
+              <button class="cc"    data-c="series"  onclick="selCat(this)">📺 Séries</button>
+              <button class="cc"    data-c="noticia" onclick="selCat(this)">📰 Notícia</button>
+              <button class="cc"    data-c="dica"    onclick="selCat(this)">💡 Dica</button>
+            </div>
+            <div class="comp-right">
+              <button class="btn-img-comp" onclick="document.getElementById('postImg').click()" title="Adicionar imagem">
+                <i class="fa-regular fa-image"></i>
+              </button>
+              <input type="file" id="postImg" accept="image/*" style="display:none" onchange="prevImg(this)"/>
+              <span class="char-ct" id="charCount">280</span>
+              <button class="btn-postar" onclick="criarPost()">Postar</button>
+            </div>
+          </div>
+          <div class="comp-img-prev" id="imgPrevWrap">
+            <img id="imgPrevImg" src="" alt="prévia"/>
+            <button class="btn-rm-img" onclick="limparImg()"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+        </div>
+      </div>
+      <div id="feedLista"></div>
+    </div>
+
+    <!-- PAGE: EXPLORAR (TikTok-style) -->
+    <div class="pg" id="pg-explorar">
+      <div class="col-hdr exp-hdr">
+        <h2>Explorar</h2>
+        <div class="exp-subtabs">
+          <button class="est on" onclick="switchExpTab(this,'jogos')">🎮 Jogos</button>
+          <button class="est" onclick="switchExpTab(this,'filmes')">🎬 Filmes</button>
+          <button class="est" onclick="switchExpTab(this,'series')">📺 Séries</button>
+        </div>
+        <button class="btn-novo-short-hdr" onclick="abrirNovoShort()" title="Postar short">
+          <i class="fa-solid fa-plus"></i> Postar
+        </button>
+      </div>
+      <div id="expContent"></div>
+    </div>
+
+    <!-- PAGE: RANKINGS -->
+    <div class="pg" id="pg-rankings">
+      <div class="col-hdr"><h2>Meus Rankings</h2></div>
+      <div class="rank-tabs">
+        <button class="rtab on" onclick="switchRankTab(this,'jogos')">🎮 Jogos</button>
+        <button class="rtab" onclick="switchRankTab(this,'filmes')">🎬 Filmes</button>
+        <button class="rtab" onclick="switchRankTab(this,'series')">📺 Séries</button>
+      </div>
+      <div class="rank-page on" id="rp-jogos">
+        <div class="rank-wrap">
+          <div class="rank-col">
+            <div class="rank-col-hdr rh-fav">⭐ Favoritos</div>
+            <div class="rank-input-row">
+              <div class="rank-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input id="inFav" type="text" data-db="jogos" placeholder="Buscar jogo..." oninput="rankSugg(this,'sgFav')"/>
+                <div class="rank-sugg" id="sgFav"></div>
+              </div>
+              <button class="btn-rank-add" onclick="addRank('fav','inFav','sgFav')">Adicionar</button>
+            </div>
+            <ul class="rank-list" id="lFav"></ul>
+          </div>
+          <div class="rank-col">
+            <div class="rank-col-hdr rh-sub">💎 Subestimados</div>
+            <div class="rank-input-row">
+              <div class="rank-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input id="inSub" type="text" data-db="jogos" placeholder="Buscar jogo..." oninput="rankSugg(this,'sgSub')"/>
+                <div class="rank-sugg" id="sgSub"></div>
+              </div>
+              <button class="btn-rank-add" onclick="addRank('sub','inSub','sgSub')">Adicionar</button>
+            </div>
+            <ul class="rank-list" id="lSub"></ul>
+          </div>
+          <div class="rank-col">
+            <div class="rank-col-hdr rh-sup">🔥 Superestimados</div>
+            <div class="rank-input-row">
+              <div class="rank-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input id="inSup" type="text" data-db="jogos" placeholder="Buscar jogo..." oninput="rankSugg(this,'sgSup')"/>
+                <div class="rank-sugg" id="sgSup"></div>
+              </div>
+              <button class="btn-rank-add" onclick="addRank('sup','inSup','sgSup')">Adicionar</button>
+            </div>
+            <ul class="rank-list" id="lSup"></ul>
+          </div>
+        </div>
+      </div>
+      <div class="rank-page" id="rp-filmes">
+        <div class="rank-wrap">
+          <div class="rank-col">
+            <div class="rank-col-hdr rh-mov">❤️ Filmes Favoritos</div>
+            <div class="rank-input-row">
+              <div class="rank-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input id="inMov" type="text" data-db="filmes" placeholder="Buscar filme..." oninput="rankSugg(this,'sgMov')"/>
+                <div class="rank-sugg" id="sgMov"></div>
+              </div>
+              <button class="btn-rank-add" onclick="addRank('mov','inMov','sgMov')">Adicionar</button>
+            </div>
+            <ul class="rank-list" id="lMov"></ul>
+          </div>
+        </div>
+      </div>
+      <div class="rank-page" id="rp-series">
+        <div class="rank-wrap">
+          <div class="rank-col">
+            <div class="rank-col-hdr rh-ser">❤️ Séries Favoritas</div>
+            <div class="rank-input-row">
+              <div class="rank-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input id="inSer" type="text" data-db="series" placeholder="Buscar série..." oninput="rankSugg(this,'sgSer')"/>
+                <div class="rank-sugg" id="sgSer"></div>
+              </div>
+              <button class="btn-rank-add" onclick="addRank('ser','inSer','sgSer')">Adicionar</button>
+            </div>
+            <ul class="rank-list" id="lSer"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: PERFIL PRÓPRIO -->
+    <div class="pg" id="pg-perfil">
+      <div class="col-hdr">
+        <button class="back-btn" onclick="goPage('feed',null)"><i class="fa-solid fa-arrow-left"></i></button>
+        <h2>Perfil</h2>
+        <button class="btn-config-perfil" onclick="goPage('config',null)" title="Configurações">
+          <i class="fa-solid fa-gear"></i>
+        </button>
+      </div>
+
+      <div class="prof-banner" id="profBanner">
+        <div class="prof-banner-pattern"></div>
+        <button class="btn-troca-capa" onclick="document.getElementById('bannerInput').click()">
+          <i class="fa-solid fa-camera"></i> Trocar capa
+        </button>
+        <input type="file" id="bannerInput" accept="image/*" style="display:none" onchange="trocarBanner(this)"/>
+        <div class="prof-ava-wrap">
+          <div class="prof-ava" onclick="document.getElementById('avaInput').click()">
+            <div id="profAvaInner"></div>
+            <div class="prof-ava-overlay"><i class="fa-solid fa-camera"></i></div>
+          </div>
+          <input type="file" id="avaInput" accept="image/*" style="display:none" onchange="trocarAvatar(this)"/>
+        </div>
+      </div>
+
+      <div class="prof-info-area">
+        <div class="prof-top-row">
+          <button class="btn-editar" onclick="toggleEditProf()">Editar perfil</button>
+        </div>
+        <div id="profDisplay">
+          <h3 class="prof-name" id="profNomeDisp"></h3>
+          <span class="prof-handle" id="profHandleDisp"></span>
+          <p class="prof-bio" id="profBioDisp"></p>
+          <div class="prof-stats">
+            <span><strong id="stPosts">0</strong> Posts</span>
+            <span><strong id="stSeg">0</strong> Seguidores</span>
+            <span><strong id="stSeguindo">0</strong> Seguindo</span>
+            <span><strong id="stLikes">0</strong> Curtidas</span>
+            <span><strong id="stCmts">0</strong> Comentários</span>
+            <span><strong id="stViews">0</strong> Views</span>
+          </div>
+        </div>
+        <div id="profEdit" class="edit-form" style="display:none">
+          <div class="ef">
+            <label>Nome / Nick</label>
+            <input type="text" id="editNick" placeholder="Seu nick..."/>
+          </div>
+          <div class="ef">
+            <label>Bio</label>
+            <textarea id="editBio" placeholder="Fale sobre você, seus jogos favoritos..." rows="3"></textarea>
+          </div>
+          <div class="edit-btns">
+            <button class="btn-cancelar" onclick="toggleEditProf()">Cancelar</button>
+            <button class="btn-salvar" onclick="salvarPerfil()">Salvar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="prof-ranks-section">
+        <button class="btn-ver-ranks" onclick="toggleProfRanks()">
+          <i class="fa-solid fa-trophy"></i>
+          <span>Ver meus rankings</span>
+          <i class="fa-solid fa-chevron-down" id="ranksChevron" style="transform:rotate(180deg)"></i>
+        </button>
+        <div id="profRanksPanel" style="display:block">
+          <div class="prof-rank-tabs">
+            <button class="prt on" onclick="switchProfRankTab(this,'jogos')">🎮 Jogos</button>
+            <button class="prt" onclick="switchProfRankTab(this,'filmes')">🎬 Filmes</button>
+            <button class="prt" onclick="switchProfRankTab(this,'series')">📺 Séries</button>
+          </div>
+          <div class="prof-rank-content on" id="prc-jogos"></div>
+          <div class="prof-rank-content" id="prc-filmes"></div>
+          <div class="prof-rank-content" id="prc-series"></div>
+        </div>
+      </div>
+
+      <div class="prof-shorts-section">
+        <div class="ps-header">
+          <h4 class="ps-title"><i class="fa-solid fa-clapperboard"></i> Meus Shorts</h4>
+          <button class="btn-add-short-prof" onclick="abrirNovoShort()">
+            <i class="fa-solid fa-plus"></i> Novo
+          </button>
+        </div>
+        <div class="prof-shorts-grid" id="meusShortsGrid"></div>
+      </div>
+
+      <div class="prof-posts-tab"><button>Posts</button></div>
+      <div id="meusFeed"></div>
+    </div>
+
+    <!-- PAGE: PERFIL DE OUTRO USUÁRIO -->
+    <div class="pg" id="pg-outroPerfil">
+      <div class="col-hdr">
+        <button class="back-btn" id="opBackBtn"><i class="fa-solid fa-arrow-left"></i></button>
+        <h2 id="opPageNick">Perfil</h2>
+      </div>
+      <div class="prof-banner op-banner" id="opBanner">
+        <div class="prof-banner-pattern"></div>
+        <div class="prof-ava-wrap">
+          <div class="prof-ava op-ava"><div id="opAvaInner"></div></div>
+        </div>
+      </div>
+      <div class="prof-info-area op-info">
+        <div class="prof-top-row op-top-row">
+          <div class="op-follow-stats">
+            <span class="op-fstat"><strong id="opSegCt">0</strong> Seguidores</span>
+            <span class="op-fstat"><strong id="opSeguindoCt">0</strong> Seguindo</span>
+          </div>
+          <button class="btn-seguir" id="btnSeguirOP" onclick="toggleFollowOP()" style="display:none">
+            <i class="fa-solid fa-user-plus"></i> Seguir
+          </button>
+        </div>
+        <h3 class="prof-name" id="opNomeDisp"></h3>
+        <span class="prof-handle" id="opHandleDisp"></span>
+        <p class="prof-bio" id="opBioDisp"></p>
+        <div class="prof-stats"><span><strong id="opPostsCt">0</strong> Posts</span></div>
+      </div>
+      <div class="prof-ranks-section">
+        <button class="btn-ver-ranks" onclick="toggleOPRanks()">
+          <i class="fa-solid fa-trophy"></i><span id="opRanksLabel">Rankings</span>
+          <i class="fa-solid fa-chevron-down" id="opRanksChevron"></i>
+        </button>
+        <div id="opRanksPanel" style="display:none">
+          <div class="prof-rank-tabs">
+            <button class="prt on" onclick="switchOPRankTab(this,'jogos')">🎮 Jogos</button>
+            <button class="prt" onclick="switchOPRankTab(this,'filmes')">🎬 Filmes</button>
+            <button class="prt" onclick="switchOPRankTab(this,'series')">📺 Séries</button>
+          </div>
+          <div class="prof-rank-content on" id="oprc-jogos"></div>
+          <div class="prof-rank-content" id="oprc-filmes"></div>
+          <div class="prof-rank-content" id="oprc-series"></div>
+        </div>
+      </div>
+      <div class="prof-shorts-section">
+        <div class="ps-header"><h4 class="ps-title"><i class="fa-solid fa-clapperboard"></i> Shorts</h4></div>
+        <div class="prof-shorts-grid" id="opShortsGrid"></div>
+      </div>
+      <div class="prof-posts-tab"><button>Posts</button></div>
+      <div id="opFeed"></div>
+    </div>
+
+    <!-- ★★★ PAGE: CONFIGURAÇÕES ★★★ -->
+    <div class="pg" id="pg-config">
+      <div class="col-hdr">
+        <button class="back-btn" onclick="goPage('perfil',null)"><i class="fa-solid fa-arrow-left"></i></button>
+        <h2>Configurações</h2>
+      </div>
+
+      <div class="config-layout">
+        <!-- Nav lateral das configs -->
+        <nav class="config-nav">
+          <button class="cn-btn on" onclick="switchConfigTab(this,'seguranca')">
+            <i class="fa-solid fa-shield-halved"></i><span>Segurança</span>
+          </button>
+          <button class="cn-btn" onclick="switchConfigTab(this,'aparencia')">
+            <i class="fa-solid fa-palette"></i><span>Aparência</span>
+          </button>
+          <button class="cn-btn" onclick="switchConfigTab(this,'privacidade')">
+            <i class="fa-solid fa-lock"></i><span>Privacidade</span>
+          </button>
+          <button class="cn-btn" onclick="switchConfigTab(this,'bloqueios')">
+            <i class="fa-solid fa-ban"></i><span>Bloqueios</span>
+          </button>
+          <button class="cn-btn" onclick="switchConfigTab(this,'notificacoes')">
+            <i class="fa-solid fa-bell"></i><span>Notificações</span>
+          </button>
+          <button class="cn-btn" onclick="switchConfigTab(this,'conta')">
+            <i class="fa-solid fa-circle-user"></i><span>Minha Conta</span>
+          </button>
+          <button class="cn-btn" onclick="switchConfigTab(this,'sobre')">
+            <i class="fa-solid fa-circle-info"></i><span>Sobre</span>
+          </button>
+        </nav>
+
+        <!-- Conteúdo das configs -->
+        <div class="config-content">
+
+          <!-- SEGURANÇA -->
+          <div class="ctab on" id="ct-seguranca">
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-key"></i>
+                <div><h3>Trocar Senha</h3><p>Atualize sua senha periodicamente para manter a conta segura.</p></div>
+              </div>
+              <div class="cs-card">
+                <div class="cs-form-row">
+                  <label>Senha atual</label>
+                  <input type="password" id="senhaAtual" placeholder="••••••••" class="cs-input"/>
+                </div>
+                <div class="cs-form-row">
+                  <label>Nova senha</label>
+                  <input type="password" id="senhaNova" placeholder="mínimo 6 caracteres" class="cs-input"/>
+                </div>
+                <div class="cs-form-row">
+                  <label>Confirmar nova senha</label>
+                  <input type="password" id="senhaNovaConf" placeholder="••••••••" class="cs-input"/>
+                </div>
+                <p class="cs-msg" id="senhaMsg"></p>
+                <button class="cs-btn-primary" onclick="trocarSenha()">
+                  <i class="fa-solid fa-lock"></i> Atualizar senha
+                </button>
+              </div>
+            </div>
+
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-mobile-screen"></i>
+                <div><h3>Verificação em Duas Etapas</h3><p>Adiciona uma camada extra de proteção à sua conta.</p></div>
+              </div>
+              <div class="cs-card">
+                <div class="cs-row">
+                  <div class="cs-row-info">
+                    <span class="cs-row-label">Autenticação 2FA</span>
+                    <span class="cs-row-sub">Exige código extra no login</span>
+                  </div>
+                  <label class="toggle-wrap">
+                    <input type="checkbox" id="tog2FA" class="toggle-inp" onchange="salvarConfiguracao('twoFactor',this.checked)"/>
+                    <span class="toggle-lbl"></span>
+                  </label>
+                </div>
+                <div class="cs-row">
+                  <div class="cs-row-info">
+                    <span class="cs-row-label">Alertas de login suspeito</span>
+                    <span class="cs-row-sub">Notifica quando detectar login de novo dispositivo</span>
+                  </div>
+                  <label class="toggle-wrap">
+                    <input type="checkbox" id="togAlertLogin" class="toggle-inp" onchange="salvarConfiguracao('alertLogin',this.checked)"/>
+                    <span class="toggle-lbl"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-envelope-circle-check"></i>
+                <div><h3>Recuperação de Conta</h3><p>Configure como recuperar o acesso caso perca sua senha.</p></div>
+              </div>
+              <div class="cs-card">
+                <div class="cs-form-row">
+                  <label>E-mail de recuperação</label>
+                  <div class="cs-input-row">
+                    <input type="email" id="emailRecuperacao" placeholder="backup@email.com" class="cs-input"/>
+                    <button class="cs-btn-sec" onclick="salvarEmailRecuperacao()">Salvar</button>
+                  </div>
+                </div>
+                <p id="emailRecMsg" class="cs-msg"></p>
+                <div class="cs-info-box">
+                  <i class="fa-solid fa-circle-info"></i>
+                  Seu e-mail atual de login: <strong id="emailAtualDisplay"></strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <div><h3>Sessões Ativas</h3><p>Dispositivos conectados à sua conta.</p></div>
+              </div>
+              <div class="cs-card">
+                <div class="cs-row session-row">
+                  <div class="session-icon"><i class="fa-solid fa-desktop"></i></div>
+                  <div class="cs-row-info">
+                    <span class="cs-row-label">Navegador atual</span>
+                    <span class="cs-row-sub" id="sessionInfo">Sessão ativa agora</span>
+                  </div>
+                  <span class="session-badge on">Ativa</span>
+                </div>
+                <button class="cs-btn-danger" style="margin-top:12px" onclick="encerrarSessoes()">
+                  <i class="fa-solid fa-right-from-bracket"></i> Encerrar todas as outras sessões
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- APARÊNCIA -->
+          <div class="ctab" id="ct-aparencia">
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-sun"></i>
+                <div><h3>Tema</h3><p>Escolha entre o modo escuro e o modo claro.</p></div>
+              </div>
+              <div class="cs-card">
+                <div class="tema-options">
+                  <button class="tema-opt on" id="temaEscuro" onclick="setTema('escuro')">
+                    <div class="tema-preview escuro-preview">
+                      <div class="tp-barra"></div>
+                      <div class="tp-content">
+                        <div class="tp-linha"></div>
+                        <div class="tp-linha short"></div>
+                      </div>
                     </div>
-                    <input type="file" id="imageInput" accept="image/*" hidden>
-                    <button onclick="document.getElementById('imageInput').click()" class="btn-action mini">Mudar imagem de avatar</button>
-                </div>
-                <div class="info-side">
-                    <input type="text" id="userName" placeholder="Seu Nick..." class="input-glow">
-                    <div class="stats-summary">
-                        <p><i class="fa-solid fa-star" style="color: #ffcc00;"></i> Jogo Favorito: <span id="top1-fav">---</span></p>
-                        <p><i class="fa-solid fa-gem" style="color: #00d4ff;"></i> Joia Rara: <span id="top1-sub">---</span></p>
+                    <span><i class="fa-solid fa-moon"></i> Escuro</span>
+                  </button>
+                  <button class="tema-opt" id="temaClaro" onclick="setTema('claro')">
+                    <div class="tema-preview claro-preview">
+                      <div class="tp-barra"></div>
+                      <div class="tp-content">
+                        <div class="tp-linha"></div>
+                        <div class="tp-linha short"></div>
+                      </div>
                     </div>
+                    <span><i class="fa-solid fa-sun"></i> Claro</span>
+                  </button>
                 </div>
-            </div>
-        </section>
-
-       <!-- RANKINGS -->
-<section class="section-card fade-in">
-    <h3><span class="icon">🏆</span> Meus Rankings Top 10</h3>
-
-    <div class="ranking-grid">
-
-        <!-- FAVORITOS -->
-        <div class="ranking-box fav-border">
-            <h4 class="title-fav">⭐ Favoritos</h4>
-
-            <div class="search-box">
-                <input type="text" id="inputFav" placeholder="Digite o nome do jogo...">
-                <div class="suggestions" id="suggestionsFav"></div>
+              </div>
             </div>
 
-            <button onclick="addToList('inputFav', 'listaFav', 'top1-fav')">Adicionar</button>
-
-            <ul id="listaFav"></ul>
-        </div>
-
-        <!-- SUBESTIMADOS -->
-        <div class="ranking-box sub-border">
-            <h4 class="title-sub">💎 Subestimados</h4>
-
-            <div class="search-box">
-                <input type="text" id="inputSub" placeholder="Digite o nome do jogo...">
-                <div class="suggestions" id="suggestionsSub"></div>
-            </div>
-
-            <button onclick="addToList('inputSub', 'listaSub', 'top1-sub')">Adicionar</button>
-
-            <ul id="listaSub"></ul>
-        </div>
-
-        <!-- SUPERESTIMADOS -->
-        <div class="ranking-box super-border">
-            <h4 class="title-super">🔥 Superestimados</h4>
-
-            <div class="search-box">
-                <input type="text" id="inputSuper" placeholder="Digite o nome do jogo...">
-                <div class="suggestions" id="suggestionsSuper"></div>
-            </div>
-
-            <button onclick="addToList('inputSuper', 'listaSuper', 'top1-super')">Adicionar</button>
-
-            <ul id="listaSuper"></ul>
-        </div>
-
-    </div>
-</section>
-
-<!-- TABELA -->
-<section id="tabela" class="section-card fade-in">
-    <h3>📊 Ranking de Jogos</h3>
-    <table>
-        <tr>
-            <th>Jogo</th>
-            <th>Gênero</th>
-            <th>Nota</th>
-        </tr>
-        <tr>
-            <td>God of War</td>
-            <td>Ação</td>
-            <td>10</td>
-        </tr>
-        <tr>
-            <td>FIFA</td>
-            <td>Esporte</td>
-            <td>8</td>
-        </tr>
-        <tr>
-            <td>Minecraft</td>
-            <td>Aventura</td>
-            <td>9</td>
-        </tr>
-    </table>
-</section>
-
-        <!-- FEEDBACK -->
-        <section class="section-card fade-in">
-            <h3><span class="icon">💬</span> Feedback da Comunidade</h3>
-            <div class="feedback-container">
-                <div id="feedbackBox" class="chat-window">
-                    <div class="feedback-item"><strong>[SISTEMA]</strong> Bem-vindo ao log de feedbacks, jogador.</div>
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-droplet"></i>
+                <div><h3>Cor de Destaque</h3><p>Personaliza botões, bordas e elementos interativos.</p></div>
+              </div>
+              <div class="cs-card">
+                <div class="accent-options">
+                  <button class="accent-opt on" data-cor="roxo"    onclick="setAccent('roxo')"    style="--ac:#9333ea" title="Roxo"></button>
+                  <button class="accent-opt"    data-cor="azul"    onclick="setAccent('azul')"    style="--ac:#0891b2" title="Azul"></button>
+                  <button class="accent-opt"    data-cor="verde"   onclick="setAccent('verde')"   style="--ac:#059669" title="Verde"></button>
+                  <button class="accent-opt"    data-cor="vermelho" onclick="setAccent('vermelho')" style="--ac:#dc2626" title="Vermelho"></button>
+                  <button class="accent-opt"    data-cor="laranja" onclick="setAccent('laranja')" style="--ac:#ea580c" title="Laranja"></button>
+                  <button class="accent-opt"    data-cor="rosa"    onclick="setAccent('rosa')"    style="--ac:#db2777" title="Rosa"></button>
+                  <button class="accent-opt"    data-cor="dourado" onclick="setAccent('dourado')" style="--ac:#d97706" title="Dourado"></button>
                 </div>
-                <div class="input-group">
-                    <input type="text" id="feedbackInput" placeholder="Sua mensagem para a Códicgames...">
-                    <button onclick="sendFeedback()" class="btn-action">Enviar feedback</button>
-                </div>
+              </div>
             </div>
-        </section>
 
-        
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-text-height"></i>
+                <div><h3>Tamanho da Fonte</h3><p>Ajusta o tamanho do texto em toda a plataforma.</p></div>
+              </div>
+              <div class="cs-card">
+                <div class="font-options">
+                  <button class="font-opt" data-size="pequena" onclick="setFonte('pequena')">
+                    <span style="font-size:.8rem">Aa</span>
+                    <small>Pequena</small>
+                  </button>
+                  <button class="font-opt on" data-size="media" onclick="setFonte('media')">
+                    <span style="font-size:1rem">Aa</span>
+                    <small>Média</small>
+                  </button>
+                  <button class="font-opt" data-size="grande" onclick="setFonte('grande')">
+                    <span style="font-size:1.2rem">Aa</span>
+                    <small>Grande</small>
+                  </button>
+                </div>
+              </div>
+            </div>
 
-    <!-- REDE SOCIAL -->
-<section id="comunidade" class="section-card fade-in">
-    <h3>🌐 Comunidade Códic</h3>
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <div><h3>Efeitos Visuais</h3><p>Controla animações e transições da interface.</p></div>
+              </div>
+              <div class="cs-card">
+                <div class="cs-row">
+                  <div class="cs-row-info">
+                    <span class="cs-row-label">Animações de interface</span>
+                    <span class="cs-row-sub">Transições suaves ao navegar</span>
+                  </div>
+                  <label class="toggle-wrap">
+                    <input type="checkbox" id="togAnimacoes" class="toggle-inp" checked onchange="salvarConfiguracao('animacoes',this.checked)"/>
+                    <span class="toggle-lbl"></span>
+                  </label>
+                </div>
+                <div class="cs-row">
+                  <div class="cs-row-info">
+                    <span class="cs-row-label">Modo compacto</span>
+                    <span class="cs-row-sub">Reduz espaçamento entre posts</span>
+                  </div>
+                  <label class="toggle-wrap">
+                    <input type="checkbox" id="togCompacto" class="toggle-inp" onchange="setModoCompacto(this.checked)"/>
+                    <span class="toggle-lbl"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
 
-    <!-- Criar Post -->
-    <div class="post-box">
-        <input type="text" id="postText" placeholder="Compartilhe uma dica, opinião ou notícia...">
-        <input type="file" id="postImage" accept="image/*">
-        <button onclick="createPost()" class="btn-action">Postar</button>
+          <!-- PRIVACIDADE -->
+          <div class="ctab" id="ct-privacidade">
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-user-shield"></i>
+                <div><h3>Visibilidade do Perfil</h3><p>Controla quem pode ver seu perfil e seus conteúdos.</p></div>
+              </div>
+              <div class="cs-card">
+                <div class="cs-row">
+                  <div class="cs-row-info">
+                    <span class="cs-row-label">Conta privada</span>
+                    <span class="cs-row-sub">Apenas seguidores aprovados veem seus posts</span>
+                  </div>
+                  <label class="toggle-wrap">
+                    <input type="checkbox" id="togContaPrivada" class="toggle-inp" onchange="salvarPrivacidade('contaPrivada',this.checked)"/>
+                    <span class="toggle-lbl"></span>
+                  </label>
+                </div>
+                <div class="cs-row">
+                  <div class="cs-row-info">
+                    <span class="cs-row-label">Quem pode ver meus posts</span>
+                  </div>
+                  <select class="cs-select" id="selQuemVe" onchange="salvarPrivacidade('quemVePosts',this.value)">
+                    <option value="todos">Todos</option>
+                    <option value="seguidores">Apenas seguidores</option>
+                    <option value="soeu">Só eu</option>
+                  </select>
+                </div>
+                <div class="cs-row">
+                  <div class="cs-row-info">
+                    <span class="cs-row-label">Quem pode comentar</span>
+                  </div>
+                  <select class="cs-select" id="selQuemComenta" onchange="salvarPrivacidade('quemComenta',this.value)">
+                    <option value="todos">Todos</option>
+                    <option value="seguidores">Apenas seguidores</option>
+                    <option value="ninguem">Ninguém</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-eye"></i>
+                <div><h3>Informações Visíveis</h3><p>Escolha quais dados outros usuários podem ver.</p></div>
+              </div>
+              <div class="cs-card">
+                <div class="cs-row">
+                  <div class="cs-row-info">
+                    <span class="cs-row-label">Mostrar status online</span>
+                    <span class="cs-row-sub">Exibe quando você está ativo</span>
+                  </div>
+                  <label class="toggle-wrap">
+                    <input type="checkbox" id="togOnline" class="toggle-inp" checked onchange="salvarPrivacidade('mostrarOnline',this.checked)"/>
+                    <span class="toggle-lbl"></span>
+                  </label>
+                </div>
+                <div class="cs-row">
+                  <div class="cs-row-info">
+                    <span class="cs-row-label">Mostrar contagem de views</span>
+                    <span class="cs-row-sub">Exibe visualizações nos seus posts</span>
+                  </div>
+                  <label class="toggle-wrap">
+                    <input type="checkbox" id="togViews" class="toggle-inp" checked onchange="salvarPrivacidade('mostrarViews',this.checked)"/>
+                    <span class="toggle-lbl"></span>
+                  </label>
+                </div>
+                <div class="cs-row">
+                  <div class="cs-row-info">
+                    <span class="cs-row-label">Perfil indexado na busca</span>
+                    <span class="cs-row-sub">Aparece nos resultados de pesquisa</span>
+                  </div>
+                  <label class="toggle-wrap">
+                    <input type="checkbox" id="togIndexado" class="toggle-inp" checked onchange="salvarPrivacidade('indexado',this.checked)"/>
+                    <span class="toggle-lbl"></span>
+                  </label>
+                </div>
+                <div class="cs-row">
+                  <div class="cs-row-info">
+                    <span class="cs-row-label">Mostrar rankings publicamente</span>
+                    <span class="cs-row-sub">Outros usuários podem ver seus rankings</span>
+                  </div>
+                  <label class="toggle-wrap">
+                    <input type="checkbox" id="togRanksPublicos" class="toggle-inp" checked onchange="salvarPrivacidade('ranksPublicos',this.checked)"/>
+                    <span class="toggle-lbl"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- BLOQUEIOS -->
+          <div class="ctab" id="ct-bloqueios">
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-ban"></i>
+                <div><h3>Bloquear Usuário</h3><p>Usuários bloqueados não podem ver seu perfil ou interagir com você.</p></div>
+              </div>
+              <div class="cs-card">
+                <div class="cs-form-row">
+                  <label>Buscar usuário para bloquear</label>
+                  <div class="cs-input-row">
+                    <input type="text" id="blockSearch" placeholder="Digite o nick..." class="cs-input"
+                      oninput="buscarParaBloquear(this.value)"/>
+                    <button class="cs-btn-danger" onclick="bloquearDaBusca()">
+                      <i class="fa-solid fa-ban"></i> Bloquear
+                    </button>
+                  </div>
+                </div>
+                <div id="blockSuggestions" class="block-sugg" style="display:none"></div>
+                <p id="blockMsg" class="cs-msg"></p>
+              </div>
+            </div>
+
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-list"></i>
+                <div><h3>Usuários Bloqueados</h3><p>Gerencie a lista de usuários que você bloqueou.</p></div>
+              </div>
+              <div class="cs-card">
+                <div id="blockedList">
+                  <div class="cs-empty"><i class="fa-solid fa-ban"></i><p>Nenhum usuário bloqueado</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- NOTIFICAÇÕES -->
+          <div class="ctab" id="ct-notificacoes">
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-bell"></i>
+                <div><h3>Notificações da Plataforma</h3><p>Escolha o que você quer ser notificado.</p></div>
+              </div>
+              <div class="cs-card">
+                <div class="cs-row">
+                  <div class="cs-row-info">
+                    <span class="cs-row-label">Novos seguidores</span>
+                    <span class="cs-row-sub">Quando alguém começar a te seguir</span>
+                  </div>
+                  <label class="toggle-wrap">
+                    <input type="checkbox" id="notifSeg" class="toggle-inp" checked onchange="salvarNotif('novosSeguidores',this.checked)"/>
+                    <span class="toggle-lbl"></span>
+                  </label>
+                </div>
+                <div class="cs-row">
+                  <div class="cs-row-info">
+                    <span class="cs-row-label">Curtidas em posts</span>
+                    <span class="cs-row-sub">Quando alguém curtir seus posts</span>
+                  </div>
+                  <label class="toggle-wrap">
+                    <input type="checkbox" id="notifLike" class="toggle-inp" checked onchange="salvarNotif('curtidas',this.checked)"/>
+                    <span class="toggle-lbl"></span>
+                  </label>
+                </div>
+                <div class="cs-row">
+                  <div class="cs-row-info">
+                    <span class="cs-row-label">Comentários</span>
+                    <span class="cs-row-sub">Quando alguém comentar nos seus posts</span>
+                  </div>
+                  <label class="toggle-wrap">
+                    <input type="checkbox" id="notifCmt" class="toggle-inp" checked onchange="salvarNotif('comentarios',this.checked)"/>
+                    <span class="toggle-lbl"></span>
+                  </label>
+                </div>
+                <div class="cs-row">
+                  <div class="cs-row-info">
+                    <span class="cs-row-label">Curtidas em shorts</span>
+                    <span class="cs-row-sub">Quando alguém curtir seus shorts</span>
+                  </div>
+                  <label class="toggle-wrap">
+                    <input type="checkbox" id="notifShort" class="toggle-inp" checked onchange="salvarNotif('curtidasShort',this.checked)"/>
+                    <span class="toggle-lbl"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-envelope"></i>
+                <div><h3>Notificações por E-mail</h3><p>Receba resumos das atividades por e-mail.</p></div>
+              </div>
+              <div class="cs-card">
+                <div class="cs-row">
+                  <div class="cs-row-info">
+                    <span class="cs-row-label">Resumo semanal</span>
+                    <span class="cs-row-sub">Destaques da semana na Códic Games</span>
+                  </div>
+                  <label class="toggle-wrap">
+                    <input type="checkbox" id="emailSemanal" class="toggle-inp" onchange="salvarNotif('emailSemanal',this.checked)"/>
+                    <span class="toggle-lbl"></span>
+                  </label>
+                </div>
+                <div class="cs-row">
+                  <div class="cs-row-info">
+                    <span class="cs-row-label">Alertas de segurança</span>
+                    <span class="cs-row-sub">Avisos sobre atividades suspeitas</span>
+                  </div>
+                  <label class="toggle-wrap">
+                    <input type="checkbox" id="emailSeg" class="toggle-inp" checked onchange="salvarNotif('emailSeguranca',this.checked)"/>
+                    <span class="toggle-lbl"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MINHA CONTA -->
+          <div class="ctab" id="ct-conta">
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-at"></i>
+                <div><h3>E-mail da Conta</h3><p>Atualize o endereço de e-mail vinculado à sua conta.</p></div>
+              </div>
+              <div class="cs-card">
+                <div class="cs-form-row">
+                  <label>E-mail atual</label>
+                  <input type="text" id="emailAtualConta" class="cs-input" readonly style="opacity:.6"/>
+                </div>
+                <div class="cs-form-row">
+                  <label>Novo e-mail</label>
+                  <input type="email" id="emailNovoConta" placeholder="novoemail@exemplo.com" class="cs-input"/>
+                </div>
+                <div class="cs-form-row">
+                  <label>Confirmar senha</label>
+                  <input type="password" id="senhaConfEmail" placeholder="••••••••" class="cs-input"/>
+                </div>
+                <p id="emailContaMsg" class="cs-msg"></p>
+                <button class="cs-btn-primary" onclick="trocarEmail()">
+                  <i class="fa-solid fa-at"></i> Atualizar e-mail
+                </button>
+              </div>
+            </div>
+
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-database"></i>
+                <div><h3>Exportar Dados</h3><p>Baixe uma cópia completa de todos os seus dados.</p></div>
+              </div>
+              <div class="cs-card">
+                <p style="font-size:.88rem;color:var(--text2);margin-bottom:14px">Você receberá um arquivo JSON com seus posts, rankings, configurações e informações de perfil.</p>
+                <button class="cs-btn-sec" onclick="exportarDados()">
+                  <i class="fa-solid fa-download"></i> Exportar meus dados
+                </button>
+              </div>
+            </div>
+
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-circle-pause"></i>
+                <div><h3>Desativar Conta</h3><p>Sua conta fica oculta temporariamente. Você pode reativar a qualquer momento.</p></div>
+              </div>
+              <div class="cs-card">
+                <div class="cs-danger-box">
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  <p>Ao desativar, seu perfil e posts ficam invisíveis para outros usuários.</p>
+                </div>
+                <button class="cs-btn-warning" onclick="desativarConta()">
+                  <i class="fa-solid fa-circle-pause"></i> Desativar minha conta
+                </button>
+              </div>
+            </div>
+
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-trash-can"></i>
+                <div><h3>Excluir Conta</h3><p>Esta ação é permanente e não pode ser desfeita.</p></div>
+              </div>
+              <div class="cs-card">
+                <div class="cs-danger-box vermelho">
+                  <i class="fa-solid fa-skull-crossbones"></i>
+                  <p>Todos os seus dados, posts, shorts e rankings serão apagados permanentemente. Esta ação <strong>não pode ser revertida</strong>.</p>
+                </div>
+                <div class="cs-form-row" style="margin-top:14px">
+                  <label>Digite sua senha para confirmar</label>
+                  <input type="password" id="senhaDeleteConta" placeholder="Sua senha atual" class="cs-input"/>
+                </div>
+                <p id="deleteContaMsg" class="cs-msg"></p>
+                <button class="cs-btn-danger" onclick="excluirConta()">
+                  <i class="fa-solid fa-trash-can"></i> Excluir minha conta permanentemente
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- SOBRE -->
+          <div class="ctab" id="ct-sobre">
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-gamepad"></i>
+                <div><h3>Códic Games</h3><p>Informação que vira conquista.</p></div>
+              </div>
+              <div class="cs-card">
+                <div class="sobre-logo">
+                  <img src="Logo Códicgames.jpeg" alt="Códic Games"/>
+                  <div>
+                    <h4>Códic Games</h4>
+                    <span>Versão 3.5.0 — 2026</span>
+                  </div>
+                </div>
+                <div class="sobre-info-grid">
+                  <div class="sobre-info-item">
+                    <i class="fa-solid fa-code-branch"></i>
+                    <span>Versão</span>
+                    <strong>3.5.0 stable</strong>
+                  </div>
+                  <div class="sobre-info-item">
+                    <i class="fa-solid fa-database"></i>
+                    <span>Armazenamento</span>
+                    <strong>Local (localStorage)</strong>
+                  </div>
+                  <div class="sobre-info-item">
+                    <i class="fa-solid fa-user-pen"></i>
+                    <span>Desenvolvedor</span>
+                    <strong>GUSTAVO ORIQUE DA SILVA</strong>
+                  </div>
+                  <div class="sobre-info-item">
+                    <i class="fa-solid fa-calendar"></i>
+                    <span>Lançamento</span>
+                    <strong>2026</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-file-contract"></i>
+                <div><h3>Termos &amp; Políticas</h3><p>Documentos legais da plataforma.</p></div>
+              </div>
+              <div class="cs-card">
+                <div class="sobre-link-list">
+                  <div class="sobre-link">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <span>Termos de Uso</span>
+                    <i class="fa-solid fa-chevron-right sobre-arrow"></i>
+                  </div>
+                  <div class="sobre-link">
+                    <i class="fa-solid fa-shield"></i>
+                    <span>Política de Privacidade</span>
+                    <i class="fa-solid fa-chevron-right sobre-arrow"></i>
+                  </div>
+                  <div class="sobre-link">
+                    <i class="fa-solid fa-cookie"></i>
+                    <span>Política de Cookies</span>
+                    <i class="fa-solid fa-chevron-right sobre-arrow"></i>
+                  </div>
+                  <div class="sobre-link">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                    <span>Diretrizes da Comunidade</span>
+                    <i class="fa-solid fa-chevron-right sobre-arrow"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="cs-section">
+              <div class="cs-section-hdr">
+                <i class="fa-solid fa-headset"></i>
+                <div><h3>Suporte</h3><p>Precisa de ajuda? Fale conosco.</p></div>
+              </div>
+              <div class="cs-card">
+                <div class="sobre-link-list">
+                  <div class="sobre-link">
+                    <i class="fa-brands fa-instagram" style="color:#e1306c"></i>
+                    <span>Instagram oficial</span>
+                    <a href="https://www.instagram.com/gustavo_orique" target="_blank" class="sobre-arrow-link">
+                      @gustavo_orique <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                  </div>
+                  <div class="sobre-link">
+                    <i class="fa-solid fa-envelope" style="color:var(--cyan)"></i>
+                    <span>E-mail de suporte</span>
+                    <span style="font-size:.8rem;color:var(--text2)">codic@games.com</span>
+                  </div>
+                </div>
+                <button class="cs-btn-sec" style="margin-top:14px;width:100%" onclick="limparCache()">
+                  <i class="fa-solid fa-broom"></i> Limpar cache local
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /config-content -->
+      </div><!-- /config-layout -->
+    </div><!-- /pg-config -->
+
+  </main>
+
+  <!-- COLUNA DIREITA -->
+  <aside class="right-col">
+    <div class="search-wrap">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput"
+          placeholder="Buscar usuários..."
+          oninput="buscarUsuario(this.value)"
+          onfocus="buscarUsuario(this.value)"
+          autocomplete="off"/>
+      </div>
+      <div class="search-results" id="searchResults" style="display:none"></div>
     </div>
 
-    <!-- Feed -->
-    <div id="feed" class="feed-container"></div>
-</section>
-
-<!-- VÍDEO COM LEGENDA -->
-<section class="section-card fade-in" style="text-align: center;">
-    <h6 class="video-title">TUDO SOBRE O SITE</h6>
-    <div class="video-hero">
-        <video controls>
-            <source src="Video codic.mp4" type="video/mp4">
-        </video>
+    <div class="widget">
+      <div class="trend-hdr">
+        <h3 class="widget-title">Trending 🔥</h3>
+        <span class="trend-live-badge"><span class="trend-live-dot"></span> Ao vivo</span>
+      </div>
+      <div id="trendLista"></div>
     </div>
-    <p>Vídeo explicativo sobre o funcionamento do site Códic Games</p>
-</section>
 
-<!-- FORMULÁRIO -->
-<section id="contato" class="section-card fade-in">
-    <h3>📩 Contato</h3>
-    <form>
-        <input type="text" placeholder="Nome" required>
-        <input type="email" placeholder="E-mail" required>
-        <textarea placeholder="Mensagem" required></textarea>
-        <button type="submit">Enviar</button>
-    </form>
-</section>
-
-</main>
-
-<footer>
-    <div class="social-container">
-        <a href="https://www.instagram.com/gustavo_orique" target="_blank" class="insta-link">
-            <i class="fa-brands fa-instagram"></i>
-            <span class="insta-text">Siga a Códicgames</span>
-        </a>
+    <div class="widget">
+      <h3 class="widget-title">Quem seguir 👾</h3>
+      <div id="sugeridosLista"></div>
     </div>
-    <p class="footer-copy">&copy; 2026 Códic Games - Developed by <strong>ORIQUE</strong></p>
-</footer>
+
+    <div class="widget rc-footer">
+      © 2026 Códic Games · by GUSTAVO ORIQUE DA SILVA
+    </div>
+  </aside>
+
+  <!-- BOTTOM NAV MOBILE -->
+  <nav class="bottom-nav">
+    <div class="bn-inner">
+      <button class="bn-btn on" data-p="feed" onclick="goPage('feed',this)">
+        <i class="fa-solid fa-house"></i>
+      </button>
+      <button class="bn-btn" data-p="explorar" onclick="goPage('explorar',this)">
+        <i class="fa-solid fa-compass"></i>
+      </button>
+      <button class="bn-btn bn-fab" onclick="focarCompositor()">
+        <i class="fa-solid fa-feather-pointed"></i>
+      </button>
+      <button class="bn-btn" data-p="rankings" onclick="goPage('rankings',this)">
+        <i class="fa-solid fa-trophy"></i>
+      </button>
+      <button class="bn-btn" data-p="perfil" onclick="goPage('perfil',this)">
+        <i class="fa-solid fa-user"></i>
+      </button>
+    </div>
+  </nav>
+
+</div>
+
+<!-- MODAL DE IMAGEM -->
+<div id="imgModal" onclick="this.classList.remove('on')">
+  <button class="modal-close" onclick="event.stopPropagation();document.getElementById('imgModal').classList.remove('on')">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+  <img id="imgModalImg" src="" alt="imagem ampliada" onclick="event.stopPropagation()"/>
+</div>
+
+<!-- MODAL NOVO SHORT -->
+<div id="newShortModal" class="modal-overlay" onclick="if(event.target===this)fecharNovoShort()">
+  <div class="modal-card">
+    <div class="modal-hdr">
+      <h3><i class="fa-solid fa-clapperboard"></i> Novo Short</h3>
+      <button onclick="fecharNovoShort()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="ef">
+        <label>Vídeo <span style="font-weight:400;text-transform:none;color:var(--text3)">(máx. 5 MB · MP4, WebM)</span></label>
+        <div class="short-upload-zone" onclick="document.getElementById('shortVideoInp').click()">
+          <input type="file" id="shortVideoInp" accept="video/*" style="display:none" onchange="prevShortVideo(this)"/>
+          <div id="shortDropEmpty">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <p>Clique para enviar um vídeo</p>
+            <span>MP4, WebM, MOV — até 5 MB</span>
+          </div>
+          <video id="shortPrevVid" style="display:none" controls muted playsinline></video>
+          <button id="shortRmBtn" style="display:none" onclick="event.stopPropagation();limparShortVideo()">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+      <div class="ef">
+        <label>Categoria</label>
+        <div class="short-cat-row">
+          <button type="button" class="scc on" data-cat="jogos" onclick="selShortCat(this)">🎮 Jogos</button>
+          <button type="button" class="scc" data-cat="filmes" onclick="selShortCat(this)">🎬 Filmes</button>
+          <button type="button" class="scc" data-cat="series" onclick="selShortCat(this)">📺 Séries</button>
+        </div>
+      </div>
+      <div class="ef">
+        <label>Título <span style="font-weight:400;text-transform:none;color:var(--red)">*</span></label>
+        <input type="text" id="shortTitleInp" placeholder="Ex: Gameplay épico de Elden Ring" maxlength="80"/>
+      </div>
+      <div class="ef">
+        <label>Descrição <span style="font-weight:400;text-transform:none;color:var(--text3)">(opcional)</span></label>
+        <textarea id="shortDescInp" placeholder="Conte mais sobre o vídeo..." rows="2" maxlength="200"></textarea>
+      </div>
+      <div class="ef">
+        <label>Tags <span style="font-weight:400;text-transform:none;color:var(--text3)">(opcional)</span></label>
+        <input type="text" id="shortTagsInp" placeholder="#EldenRing #Gameplay" maxlength="80"/>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancelar" onclick="fecharNovoShort()">Cancelar</button>
+      <button class="btn-salvar" onclick="criarShort()">
+        <i class="fa-solid fa-paper-plane"></i> Publicar Short
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
 <script src="script.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-
 </body>
 </html>
